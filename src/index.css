@@ -135,7 +135,7 @@ button {
 }
 
 .pageHeader {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 800;
 }
 
@@ -220,7 +220,7 @@ button {
 
 .signInBar,
 .signUpBar {
-  margin-top: 3rem;
+  margin-top: 0rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -289,7 +289,7 @@ button {
 }
 
 .registerLink {
-  margin-top: 4rem;
+  margin-top: .8rem;
   color: #00cc66;
   font-weight: 600;
   text-align: center;
