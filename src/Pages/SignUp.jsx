@@ -1,5 +1,9 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
+import {toast} from 'react-toastify'
+import {getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
+import {setDoc, doc, serverTimestamp } from 'firebase/firestore'
+import { db } from '../firebase.config'
 import {ReactComponent as ArrowRightIcon} from '../assets/svg/keyboardArrowRightIcon.svg'
 import visibilityIcon from '../assets/svg/visibilityIcon.svg'
 
@@ -22,6 +26,33 @@ function SignUp() {
     }))
   }
 
+  const onSubmit = async (e) => {
+    e.preventDefault()
+
+    try {
+      const auth = getAuth()
+
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+
+      const user = userCredential.user
+      
+      updateProfile(auth.currentUser, {
+        displayName: name
+      })
+
+      const formDataCopy = {...formData}
+      delete formDataCopy.password
+      formDataCopy.timestamp = serverTimestamp()
+
+      await setDoc(doc(db, 'isers', user.uid), formDataCopy)
+
+
+      navigate('/')
+    } catch (error) {
+      toast.error('Something went wrong with registration')
+    }
+  }
+
   return (
     <>
       <div className="pageContainer">
@@ -29,7 +60,7 @@ function SignUp() {
           <p className="pageHeader">Hello There!</p>
         </header>
         <main>
-          <form>
+          <form onSubmit={onSubmit}>
           <input type="text" className="nameInput" placeholder="Name" id="name" value={name} onChange={onChange} />
             <input type="email" className="emailInput" placeholder="Email" id="email" value={email} onChange={onChange} />
             <div className="passwordInputDiv">
