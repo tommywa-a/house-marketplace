@@ -59,12 +59,36 @@ function CreateListing() {
     // eslint-disabled-next-line react-hooks/exhaustive-deps
   }, [isMounted])
 
+  const onSubmit = (e) => {
+    e.preventDefault()
+  }
+
+  const onMutate = (e) => {}
+
   if (loading) {
     return <Spinner />
   }
 
   return (
-    <div>Create</div>
+    <div className="profile">
+      <header>
+        <p className="pageHeader">Create a Listing</p>
+      </header>
+
+      <main>
+        <form onSubmit={onSubmit}>
+          <label className='formLabel'>Sell / Rent</label>
+          <div className="formButtons">
+            <button type="button" className={type === 'sale' ? 'formButtonActive' : 'formButton'} id='type' value='sale' onclick={onMutate}>
+              Sell
+            </button>
+            <button type="button" className={type === 'rent' ? 'formButtonActive' : 'formButton'} id='type' value='rent' onclick={onMutate}>
+              Rent
+            </button>
+          </div>
+        </form>
+      </main>
+    </div>
   )
 }
 
