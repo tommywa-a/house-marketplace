@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react"
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 import Spinner from "../Components/Spinner"
 
 function CreateListing() {
@@ -9,8 +10,8 @@ function CreateListing() {
   const [formData, setFormData] = useState({
     type: 'rent',
     name: '',
-    bedroom: 1,
-    bedroom: 1,
+    bedrooms: 1,
+    bathrooms: 1,
     parking: false,
     furnished: false,
     address: '',
@@ -59,8 +60,50 @@ function CreateListing() {
     // eslint-disabled-next-line react-hooks/exhaustive-deps
   }, [isMounted])
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault()
+
+    setLoading(true)
+
+    if (discountedPrice >= regularPrice) {
+      setLoading(false)
+      toast.error('Discounted price needs to be less than regular price')
+      return
+    }
+
+    if (images.length > 6) {
+      setLoading(false)
+      toast.error('Max of 6 images')
+      return
+    }
+
+    let geolocation = {}
+    let location
+
+    if (geolocationEnabled) {
+      const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.REACT_APP_GEOCODE_API_KEY}`)
+      
+      const data = await response.json()
+      
+      geolocation.lat = data.results[0]?.geometry.location.lat ?? 0
+      geolocation.lng = data.results[0]?.geometry.location.lng ?? 0
+
+      location = data.status === 'ZERO_RESULTS' ? undefined : data.results[0]?.formatted_address
+
+      if (location === undefined || location.includes('undefined')) {
+        setLoading(false)
+        toast.error('Please enter a correct address')
+        return
+      }
+
+    } else {
+      geolocation.lat = latitude
+      geolocation.lng = longitude
+      location = address
+    }
+
+    setLoading(false)
+
   }
 
   const onMutate = (e) => {
@@ -77,7 +120,7 @@ function CreateListing() {
     if (e.target.files) {
       setFormData((prevState) => ({
         ...prevState,
-        images: e.target.files
+        images: e.target.files,
       }))
     }
     // Texts/Booleans or numbers
@@ -103,10 +146,10 @@ function CreateListing() {
         <form onSubmit={onSubmit}>
           <label className='formLabel'>Sell / Rent</label>
           <div className="formButtons">
-            <button type="button" className={type === 'sale' ? 'formButtonActive' : 'formButton'} id='type' value='sale' onclick={onMutate}>
+            <button type="button" className={type === 'sale' ? 'formButtonActive' : 'formButton'} id='type' value='sale' onClick={onMutate}>
               Sell
             </button>
-            <button type="button" className={type === 'rent' ? 'formButtonActive' : 'formButton'} id='type' value='rent' onclick={onMutate}>
+            <button type="button" className={type === 'rent' ? 'formButtonActive' : 'formButton'} id='type' value='rent' onClick={onMutate}>
               Rent
             </button>
           </div>
