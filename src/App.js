@@ -28,7 +28,7 @@ function App() {
           <Route path='/forgot-password' element={<ForgotPassword />} />
           <Route path='/create-listing' element={<CreateListing />} />
         </Routes>
-        <Navbar />
+        <Navbar /> 
       </Router>
 
       <ToastContainer />
