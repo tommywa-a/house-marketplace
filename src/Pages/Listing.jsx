@@ -41,7 +41,9 @@ function Listing() {
 
   return (
     <main>
-      <Swiper modules={[Navigation, Pagination, Scrollbar, A11y]} slidesPerView={1} pagination={{ clickable: true }}>
+      {/* <Swiper 
+      // modules={[Navigation, Pagination, Scrollbar, A11y]} 
+      slidesPerView={1} pagination={{ clickable: true }}>
         {listing.imgUrls.map((url, index) => (
           <SwiperSlide key={index}>
             <div
@@ -54,7 +56,7 @@ function Listing() {
             ></div>
           </SwiperSlide>
         ))}
-      </Swiper>
+      </Swiper> */}
 
       <div className="shareIconDiv" onClick={() => {
         navigator.clipboard.writeText(window.location.href)
