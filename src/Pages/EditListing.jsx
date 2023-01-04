@@ -9,6 +9,7 @@ import {v4 as uuidv4} from 'uuid'
 import Spinner from '../Components/Spinner'
 
 function EditListing() {
+  // eslint-disable-next-line
   const [geolocationEnabled, setGeolocationEnabled] = useState(true)
   const [loading, setLoading] = useState(false)
   const [listing, setListing] = useState(false)
@@ -41,7 +42,7 @@ function EditListing() {
       toast.error('You can not edit this listing')
       navigate('/')
     }
-  }, [])
+  })
 
   // Fetches listing to edit
   useEffect(() => {
@@ -143,6 +144,8 @@ function EditListing() {
               case 'running':
                 console.log('Upload is running');
                 break;
+              default:
+                break
             }
           }, 
           (error) => {
