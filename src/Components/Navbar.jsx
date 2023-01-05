@@ -15,7 +15,7 @@ function Navbar() {
 
   return (
     <footer className='navbar'>
-      <nav className="navbarNav">
+      <nav className="navbarNav" style={{display: 'block'}}>
         <ul className="navbarListItems">
           <li className="navbarListItem" onClick={() => navigate('/')}>
             <ExploreIcon fill={pathMatchRoute('/') ? '#2c2c2c' : '#8f8f8f' } width='36px' height='36px'/>

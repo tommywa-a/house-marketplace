@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800;900&display=swap');
 * {
   box-sizing: border-box;
@@ -9,7 +13,7 @@ html::-webkit-scrollbar {
 
 body {
   font-family: 'Montserrat', sans-serif;
-  background-color: #f2f4f8;
+  /* background-color: #f2f4f8; */
   margin: 0;
   box-sizing: border-box;
 }
@@ -17,7 +21,7 @@ body {
 a {
   text-decoration: none;
   display: block;
-  color: #000000;
+  /* color: #000000; */
 }
 
 button {
@@ -145,7 +149,7 @@ button {
   bottom: 0;
   right: 0;
   height: 85px;
-  background-color: #ffffff;
+  background-color: #535966;
   z-index: 1000;
   display: flex;
   justify-content: center;
